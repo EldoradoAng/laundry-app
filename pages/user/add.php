@@ -4,6 +4,7 @@ include "../../config/database.php";
 
 $outlets = mysqli_query($conn, "SELECT * FROM tb_outlet");
 
+
 if(isset($_POST['simpan'])){
   $nama = $_POST['nama'];
   $username = $_POST['username'];
@@ -35,6 +36,7 @@ if(isset($_POST['simpan'])){
     <div class="mb-3">
       <label class="form-label">Role</label>
       <select name="role" class="form-control" required>
+        <option value="">-- Pilih Role --</option>
         <option value="admin">Admin</option>
         <option value="kasir">Kasir</option>
         <option value="owner">Owner</option>
@@ -42,10 +44,12 @@ if(isset($_POST['simpan'])){
     </div>
     <div class="mb-3">
       <label class="form-label">Outlet</label>
-      <select name="id_outlet" class="form-control">
+      <select name="id_outlet" class="form-control" required>
         <option value="">-- Pilih Outlet --</option>
-        <?php while($o=mysqli_fetch_assoc($outlets)) { ?>
-          <option value="<?= $o['id_outlet']; ?>"><?= $o['nama_outlet']; ?></option>
+        <?php 
+        $outlets = mysqli_query($conn, "SELECT * FROM tb_outlet");
+        while ($o = mysqli_fetch_assoc($outlets)) { ?>
+          <option value="<?= $o['id']; ?>"><?= $o['nama_outlet']; ?></option>
         <?php } ?>
       </select>
     </div>

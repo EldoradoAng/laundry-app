@@ -3,7 +3,7 @@ include "../../template/header.php";
 include "../../config/database.php";
 
 $id = $_GET['id'];
-$data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_member WHERE id_member='$id'"));
+$data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_member WHERE id='$id'"));
 
 if(isset($_POST['update'])){
   $nama = $_POST['nama'];
@@ -11,7 +11,7 @@ if(isset($_POST['update'])){
   $jk = $_POST['jenis_kelamin'];
   $tlp = $_POST['tlp'];
 
-  mysqli_query($conn, "UPDATE tb_member SET nama='$nama', alamat='$alamat', jenis_kelamin='$jk', tlp='$tlp' WHERE id_member='$id'");
+  mysqli_query($conn, "UPDATE tb_member SET nama='$nama', alamat='$alamat', jenis_kelamin='$jk', tlp='$tlp' WHERE id='$id'");
   header("Location: index.php");
 }
 ?>

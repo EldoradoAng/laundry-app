@@ -32,8 +32,8 @@ $q = mysqli_query($conn, "SELECT * FROM tb_member");
         <td><?= $row['jenis_kelamin']; ?></td>
         <td><?= $row['tlp']; ?></td>
         <td>
-          <a href="edit.php?id=<?= $row['id_member']; ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
-          <a href="delete.php?id=<?= $row['id_member']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus data ini?');"><i class="bi bi-trash"></i></a>
+          <a href="edit.php?id=<?= $row['id']; ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+          <a href="delete.php?id=<?= $row['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus data ini?');"><i class="bi bi-trash"></i></a>
         </td>
       </tr>
       <?php } ?>

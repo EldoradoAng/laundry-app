@@ -31,14 +31,14 @@ $q = mysqli_query($conn, "SELECT * FROM tb_outlet");
         <td><?= $row['alamat']; ?></td>
         <td><?= $row['tlp']; ?></td>
         <td>
-          <a href="edit.php?id=<?= $row['nama_outlet']; ?>" 
+          <a href="edit.php?id=<?= $row['id']; ?>" 
              class="btn btn-sm btn-warning">
-             <i class="bi bi-pencil"></i> Edit
+             <i class="bi bi-pencil"></i>
           </a>
-          <a href="delete.php?id=<?= $row['nama_outlet']; ?>" 
+          <a href="delete.php?id=<?= $row['id']; ?>" 
              class="btn btn-sm btn-danger"
              onclick="return confirm('Yakin hapus outlet ini?');">
-             <i class="bi bi-trash"></i> Hapus
+             <i class="bi bi-trash"></i>
           </a>
         </td>
       </tr>
