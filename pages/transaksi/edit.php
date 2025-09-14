@@ -14,15 +14,21 @@ $details = mysqli_query($conn, "
 ");
 
 if(isset($_POST['update'])){
-  $id_member = $_POST['id_member'];
-  $tgl = $_POST['tgl'];
+  $id_member   = $_POST['id_member'];
+  $tgl         = $_POST['tgl'];
   $batas_waktu = $_POST['batas_waktu'];
-  $status = $_POST['status'];
-  $dibayar = $_POST['dibayar'];
+  $status      = $_POST['status'];
+  $dibayar     = $_POST['dibayar'];
+
+  // tambahan
+  $biaya_tambahan = $_POST['biaya_tambahan'];
+  $diskon         = $_POST['diskon'];
+  $pajak          = $_POST['pajak'];
 
   mysqli_query($conn, "UPDATE tb_transaksi SET
     id_member='$id_member', tgl='$tgl', batas_waktu='$batas_waktu',
-    status='$status', dibayar='$dibayar'
+    status='$status', dibayar='$dibayar',
+    biaya_tambahan='$biaya_tambahan', diskon='$diskon', pajak='$pajak'
     WHERE id='$id'
   ");
 
@@ -81,6 +87,20 @@ if(isset($_POST['update'])){
             <option value="belum_dibayar" <?= $data['dibayar']=='belum_dibayar'?'selected':''; ?>>Belum Dibayar</option>
             <option value="dibayar" <?= $data['dibayar']=='dibayar'?'selected':''; ?>>Dibayar</option>
           </select>
+        </div>
+
+        <!-- tambahan -->
+        <div class="mb-3">
+          <label>Biaya Tambahan</label>
+          <input type="number" name="biaya_tambahan" class="form-control" value="<?= $data['biaya_tambahan']; ?>">
+        </div>
+        <div class="mb-3">
+          <label>Diskon (%)</label>
+          <input type="number" name="diskon" class="form-control" value="<?= $data['diskon']; ?>">
+        </div>
+        <div class="mb-3">
+          <label>Pajak (%)</label>
+          <input type="number" name="pajak" class="form-control" value="<?= $data['pajak']; ?>">
         </div>
       </div>
     </div>

@@ -1,11 +1,12 @@
 <?php 
 include "../../template/header.php"; 
-include "../../config/database.php";
+include "../../config/database.php"; 
 
 $sql = "
-  SELECT t.*, m.nama AS nama_member
+  SELECT t.*, m.nama AS nama_member, o.nama_outlet
   FROM tb_transaksi t
   JOIN tb_member m ON t.id_member = m.id
+  JOIN tb_outlet o ON t.id_outlet = o.id
   ORDER BY t.tgl DESC
 ";
 $q = mysqli_query($conn, $sql);
@@ -20,9 +21,15 @@ $q = mysqli_query($conn, $sql);
     <thead class="table-dark">
       <tr>
         <th>No</th>
+        <th>Outlet</th>
         <th>Member</th>
         <th>Tanggal</th>
         <th>Batas Waktu</th>
+        <th>Subtotal Paket</th>
+        <th>Biaya Tambahan</th>
+        <th>Diskon</th>
+        <th>Pajak</th>
+        <th>Total Akhir</th>
         <th>Status</th>
         <th>Dibayar</th>
         <th>Aksi</th>
@@ -30,11 +37,21 @@ $q = mysqli_query($conn, $sql);
     </thead>
     <tbody>
       <?php $no=1; while($row=mysqli_fetch_assoc($q)) { ?>
+      <?php 
+        $subtotal    = hitung_subtotal_paket($conn, $row['id']); 
+        $total_akhir = hitung_total_transaksi($conn, $row['id']); 
+      ?>
       <tr>
         <td><?= $no++; ?></td>
+        <td><?= $row['nama_outlet']; ?></td>
         <td><?= $row['nama_member']; ?></td>
         <td><?= $row['tgl']; ?></td>
         <td><?= $row['batas_waktu']; ?></td>
+        <td>Rp <?= number_format($subtotal,0,',','.'); ?></td>
+        <td>Rp <?= number_format($row['biaya_tambahan'],0,',','.'); ?></td>
+        <td><?= $row['diskon']; ?>%</td>
+        <td><?= $row['pajak']; ?>%</td>
+        <td><b>Rp <?= number_format($total_akhir,0,',','.'); ?></b></td>
         <td><span class="badge bg-info"><?= ucfirst($row['status']); ?></span></td>
         <td>
           <span class="badge <?= $row['dibayar']=='dibayar'?'bg-success':'bg-danger'; ?>">

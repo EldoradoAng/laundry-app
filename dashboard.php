@@ -2,14 +2,26 @@
 include "template/header.php";
 include "config/database.php";
 
-// Total Pendapatan (hanya yang dibayar)
+// Total Pendapatan (hanya yang dibayar) 
+// hitung: (subtotal paket + biaya_tambahan - diskon + pajak)
 $sqlTotal = <<<SQL
-  SELECT SUM(dt.qty * p.harga) AS total_bayar
-  FROM tb_detail_transaksi dt
-  JOIN tb_paket p       ON dt.id_paket = p.id
-  JOIN tb_transaksi t   ON dt.id_transaksi = t.id
+  SELECT SUM(
+    (
+      (COALESCE(sub.total_paket,0) + t.biaya_tambahan)
+      - ((COALESCE(sub.total_paket,0) + t.biaya_tambahan) * (t.diskon/100))
+      + (( (COALESCE(sub.total_paket,0) + t.biaya_tambahan) - ((COALESCE(sub.total_paket,0) + t.biaya_tambahan) * (t.diskon/100)) ) * (t.pajak/100))
+    )
+  ) AS total_bayar
+  FROM tb_transaksi t
+  LEFT JOIN (
+    SELECT dt.id_transaksi, SUM(dt.qty * p.harga) AS total_paket
+    FROM tb_detail_transaksi dt
+    JOIN tb_paket p ON dt.id_paket = p.id
+    GROUP BY dt.id_transaksi
+  ) sub ON t.id = sub.id_transaksi
   WHERE t.dibayar = 'dibayar'
 SQL;
+
 $qTotal = mysqli_query($conn, $sqlTotal);
 $total_bayar = ($row = mysqli_fetch_assoc($qTotal)) ? (int)$row['total_bayar'] : 0;
 
