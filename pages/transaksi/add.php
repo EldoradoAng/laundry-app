@@ -2,41 +2,40 @@
 include "../../template/header.php"; 
 include "../../config/database.php";
 
-// Ambil data member & paket berdasarkan outlet login
-$id_outlet = $_SESSION['id_outlet'];
 $members = mysqli_query($conn, "SELECT * FROM tb_member");
-$pakets  = mysqli_query($conn, "SELECT * FROM tb_paket WHERE id_outlet='$id_outlet'");
+$pakets  = mysqli_query($conn, "SELECT * FROM tb_paket");
 
 if(isset($_POST['simpan'])){
-  $id_user   = $_SESSION['id_user'];
-  $id_member = $_POST['id_member'];
-  $tgl = $_POST['tgl'];
+  $id_member   = $_POST['id_member'];
+  $tgl         = $_POST['tgl'];
   $batas_waktu = $_POST['batas_waktu'];
-  $status = $_POST['status'];
-  $dibayar = $_POST['dibayar'];
+  $status      = $_POST['status'];
+  $dibayar     = $_POST['dibayar'];
 
-  // insert transaksi
-  mysqli_query($conn, "INSERT INTO tb_transaksi
-    (id_outlet, kode_invoice, id_member, tgl, batas_waktu, status, dibayar, id_user, biaya_tambahan, diskon, pajak)
-    VALUES
-    ('$id_outlet','INV-".date("YmdHis")."','$id_member','$tgl','$batas_waktu','$status','$dibayar','$id_user',0,0,0)
+  // tambahan
+  $biaya_tambahan = $_POST['biaya_tambahan'];
+  $diskon         = $_POST['diskon'];
+  $pajak          = $_POST['pajak'];
+
+  // simpan transaksi baru
+  mysqli_query($conn, "INSERT INTO tb_transaksi 
+    (id_member, tgl, batas_waktu, status, dibayar, biaya_tambahan, diskon, pajak) 
+    VALUES 
+    ('$id_member','$tgl','$batas_waktu','$status','$dibayar','$biaya_tambahan','$diskon','$pajak')
   ");
 
   $id_transaksi = mysqli_insert_id($conn);
 
-  // insert detail paket
+  // simpan detail paket
   if(isset($_POST['paket'])){
     foreach($_POST['paket'] as $i=>$id_paket){
-      if(!empty($id_paket)){
-        $qty = (int)$_POST['qty'][$i];
-        mysqli_query($conn, "INSERT INTO tb_detail_transaksi (id_transaksi, id_paket, qty) 
-                             VALUES ('$id_transaksi','$id_paket','$qty')");
-      }
+      $qty = $_POST['qty'][$i];
+      mysqli_query($conn, "INSERT INTO tb_detail_transaksi (id_transaksi,id_paket,qty) 
+        VALUES ('$id_transaksi','$id_paket','$qty')");
     }
   }
 
   header("Location: index.php");
-  exit;
 }
 ?>
 
@@ -80,20 +79,31 @@ if(isset($_POST['simpan'])){
             <option value="dibayar">Dibayar</option>
           </select>
         </div>
+
+        <!-- tambahan -->
+        <div class="mb-3">
+          <label>Biaya Tambahan</label>
+          <input type="number" name="biaya_tambahan" class="form-control" value="0">
+        </div>
+        <div class="mb-3">
+          <label>Diskon (%)</label>
+          <input type="number" name="diskon" class="form-control" value="0">
+        </div>
+        <div class="mb-3">
+          <label>Pajak (%)</label>
+          <input type="number" name="pajak" class="form-control" value="0">
+        </div>
       </div>
     </div>
 
     <hr>
-    <h5>Detail Paket (Outlet: <?= $id_outlet; ?>)</h5>
+    <h5>Detail Paket</h5>
     <div id="paket-container">
       <div class="row g-2 mb-2 paket-row">
         <div class="col-md-6">
           <select name="paket[]" class="form-control">
-            <option value="">-- Pilih Paket --</option>
             <?php mysqli_data_seek($pakets,0); while($p=mysqli_fetch_assoc($pakets)){ ?>
-              <option value="<?= $p['id']; ?>">
-                <?= $p['nama_paket']; ?> (Rp <?= number_format($p['harga']); ?>)
-              </option>
+              <option value="<?= $p['id']; ?>"><?= $p['nama_paket']; ?> (Rp <?= number_format($p['harga']); ?>)</option>
             <?php } ?>
           </select>
         </div>
@@ -108,7 +118,7 @@ if(isset($_POST['simpan'])){
     <button type="button" id="add-row" class="btn btn-secondary mb-3">+ Tambah Paket</button>
 
     <div>
-      <button type="submit" name="simpan" class="btn btn-success">Simpan</button>
+      <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
       <a href="index.php" class="btn btn-secondary">Batal</a>
     </div>
   </form>
@@ -117,14 +127,19 @@ if(isset($_POST['simpan'])){
 <script>
 document.getElementById("add-row").addEventListener("click", function(){
   let container = document.getElementById("paket-container");
-  let row = container.querySelector(".paket-row").cloneNode(true);
-  row.querySelectorAll("input").forEach(i => i.value = "");
-  row.querySelectorAll("select").forEach(s => s.selectedIndex = 0);
+  let firstRow = container.querySelector(".paket-row");
+  let row = firstRow.cloneNode(true);
+
+  row.querySelectorAll("input").forEach(i=>i.value="");
+  row.querySelectorAll("select").forEach(s=>s.selectedIndex=0);
+
   container.appendChild(row);
+
   row.querySelector(".remove-row").addEventListener("click", function(){
     row.remove();
   });
 });
+
 document.querySelectorAll(".remove-row").forEach(btn=>{
   btn.addEventListener("click", function(){ btn.closest(".paket-row").remove(); });
 });
