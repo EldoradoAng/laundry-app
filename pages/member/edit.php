@@ -16,7 +16,7 @@ if(isset($_POST['update'])){
 }
 ?>
 
-<div class="container-fluid">
+<div class="container-fluid mt-5 pt-3">
   <h3 class="fw-bold mb-3">Edit Member</h3>
   <form method="POST">
     <div class="mb-3">

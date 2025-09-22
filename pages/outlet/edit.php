@@ -20,11 +20,11 @@ if(isset($_POST['update'])){
 }
 ?>
 
-<div class="container-fluid">
-  <h3 class="fw-bold mb-3">Edit Outlet</h3>
+<div class="container-fluid mt-5 pt-3">
+  <h3 class="fw-bold mb-3">Edit Cabang</h3>
   <form method="POST">
     <div class="mb-3">
-      <label class="form-label">Nama Outlet</label>
+      <label class="form-label">Nama Cabang</label>
       <input type="text" name="nama_outlet" value="<?= $data['nama_outlet']; ?>" class="form-control" required>
     </div>
     <div class="mb-3">

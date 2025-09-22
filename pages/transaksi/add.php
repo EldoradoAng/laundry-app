@@ -2,10 +2,13 @@
 include "../../template/header.php"; 
 include "../../config/database.php";
 
+// ambil data member, paket, outlet
 $members = mysqli_query($conn, "SELECT * FROM tb_member");
 $pakets  = mysqli_query($conn, "SELECT * FROM tb_paket");
+$outlets = mysqli_query($conn, "SELECT * FROM tb_outlet");
 
 if(isset($_POST['simpan'])){
+  $id_outlet   = $_POST['id_outlet'];
   $id_member   = $_POST['id_member'];
   $tgl         = $_POST['tgl'];
   $batas_waktu = $_POST['batas_waktu'];
@@ -17,11 +20,11 @@ if(isset($_POST['simpan'])){
   $diskon         = $_POST['diskon'];
   $pajak          = $_POST['pajak'];
 
-  // simpan transaksi baru
+  // insert transaksi
   mysqli_query($conn, "INSERT INTO tb_transaksi 
-    (id_member, tgl, batas_waktu, status, dibayar, biaya_tambahan, diskon, pajak) 
+    (id_outlet, id_member, tgl, batas_waktu, status, dibayar, biaya_tambahan, diskon, pajak) 
     VALUES 
-    ('$id_member','$tgl','$batas_waktu','$status','$dibayar','$biaya_tambahan','$diskon','$pajak')
+    ('$id_outlet', '$id_member', '$tgl', '$batas_waktu', '$status', '$dibayar', '$biaya_tambahan', '$diskon', '$pajak')
   ");
 
   $id_transaksi = mysqli_insert_id($conn);
@@ -30,8 +33,7 @@ if(isset($_POST['simpan'])){
   if(isset($_POST['paket'])){
     foreach($_POST['paket'] as $i=>$id_paket){
       $qty = $_POST['qty'][$i];
-      mysqli_query($conn, "INSERT INTO tb_detail_transaksi (id_transaksi,id_paket,qty) 
-        VALUES ('$id_transaksi','$id_paket','$qty')");
+      mysqli_query($conn, "INSERT INTO tb_detail_transaksi (id_transaksi,id_paket,qty) VALUES ('$id_transaksi','$id_paket','$qty')");
     }
   }
 
@@ -44,6 +46,15 @@ if(isset($_POST['simpan'])){
   <form method="POST">
     <div class="row">
       <div class="col-md-6">
+        <div class="mb-3">
+          <label>Cabang</label>
+          <select name="id_outlet" class="form-control" required>
+            <option value="">-- Pilih Cabang --</option>
+            <?php while($o=mysqli_fetch_assoc($outlets)){ ?>
+              <option value="<?= $o['id']; ?>"><?= $o['nama_outlet']; ?></option>
+            <?php } ?>
+          </select>
+        </div>
         <div class="mb-3">
           <label>Member</label>
           <select name="id_member" class="form-control" required>

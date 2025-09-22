@@ -17,7 +17,7 @@ $q = mysqli_query($conn, $sql);
   <table class="table table-bordered table-hover">
     <thead class="table-dark">
       <tr>
-        <th>No</th><th>Nama</th><th>Username</th><th>Role</th><th>Outlet</th><th>Aksi</th>
+        <th>No</th><th>Nama</th><th>Username</th><th>Role</th><th>Cabang</th><th>Aksi</th>
       </tr>
     </thead>
     <tbody>

@@ -43,9 +43,9 @@ if(isset($_POST['simpan'])){
       </select>
     </div>
     <div class="mb-3">
-      <label class="form-label">Outlet</label>
+      <label class="form-label">Cabang</label>
       <select name="id_outlet" class="form-control" required>
-        <option value="">-- Pilih Outlet --</option>
+        <option value="">-- Pilih Cabang --</option>
         <?php 
         $outlets = mysqli_query($conn, "SELECT * FROM tb_outlet");
         while ($o = mysqli_fetch_assoc($outlets)) { ?>

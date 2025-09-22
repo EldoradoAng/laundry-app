@@ -7,9 +7,9 @@ $q = mysqli_query($conn, "SELECT * FROM tb_outlet");
 
 <div class="container-fluid mt-5 pt-3">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3 class="fw-bold">Data Outlet</h3>
+    <h3 class="fw-bold">Data Cabang</h3>
     <a href="add.php" class="btn btn-primary">
-      <i class="bi bi-plus-circle"></i> Tambah Outlet
+      <i class="bi bi-plus-circle"></i> Tambah Cabang
     </a>
   </div>
 
@@ -17,7 +17,7 @@ $q = mysqli_query($conn, "SELECT * FROM tb_outlet");
     <thead class="table-dark">
       <tr>
         <th>No</th>
-        <th>Nama Outlet</th>
+        <th>Nama Cabang</th>
         <th>Alamat</th>
         <th>Telepon</th>
         <th>Aksi</th>

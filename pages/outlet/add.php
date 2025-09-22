@@ -13,10 +13,10 @@ if(isset($_POST['simpan'])){
 ?>
 
 <div class="container-fluid mt-5 pt-3">
-  <h3 class="fw-bold mb-3">Tambah Outlet</h3>
+  <h3 class="fw-bold mb-3">Tambah Cabang</h3>
   <form method="POST">
     <div class="mb-3">
-      <label class="form-label">Nama Outlet</label>
+      <label class="form-label">Nama Cabang</label>
       <input type="text" name="nama_outlet" class="form-control" required>
     </div>
     <div class="mb-3">

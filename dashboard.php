@@ -60,7 +60,7 @@ $jml_outlet = (int)mysqli_fetch_assoc($qOutlet)['jml'];
     </div>
     <div class="col-md-3">
       <div class="card shadow-sm p-3">
-        <h6>Total Outlet</h6>
+        <h6>Total Cabang</h6>
         <h4 class="fw-bold"><?= $jml_outlet; ?></h4>
       </div>
     </div>

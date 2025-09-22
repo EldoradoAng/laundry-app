@@ -21,11 +21,11 @@ $q = mysqli_query($conn, $sql);
     <thead class="table-dark">
       <tr>
         <th>No</th>
-        <th>Outlet</th>
+        <th>Cabang</th>
         <th>Member</th>
         <th>Tanggal</th>
         <th>Batas Waktu</th>
-        <th>Subtotal Paket</th>
+        <th>Subtotal</th>
         <th>Biaya Tambahan</th>
         <th>Diskon</th>
         <th>Pajak</th>

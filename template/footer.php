@@ -1,4 +1,5 @@
-</div> <!-- end main content -->
+</div>
+<!-- end main content -->
 <footer>
   <div class="container">
     <p class="mb-0">Laundry Management &copy; <?= date("Y"); ?></p>

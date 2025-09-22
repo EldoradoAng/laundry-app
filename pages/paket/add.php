@@ -15,13 +15,13 @@ if (isset($_POST['save'])) {
 }
 ?>
 
-<div class="container-fluid">
+<div class="container-fluid mt-5 pt-3">
   <h3 class="fw-bold mb-3">Tambah Paket</h3>
   <form method="POST">
     <div class="mb-3">
-      <label class="form-label">Outlet</label>
+      <label class="form-label">Cabang</label>
       <select name="id_outlet" class="form-control" required>
-        <option value="">-- Pilih Outlet --</option>
+        <option value="">-- Pilih Cabang --</option>
         <?php 
         $outlets = mysqli_query($conn, "SELECT * FROM tb_outlet");
         while ($o = mysqli_fetch_assoc($outlets)) { ?>

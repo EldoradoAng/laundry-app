@@ -1,7 +1,7 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['id_user']) && basename($_SERVER['PHP_SELF']) != "index.php") {
-    header("Location: /laundry-app/index.php");
+    header("Location:/laundry-app/index.php");
     exit;
 }
 ?>
@@ -21,7 +21,7 @@ if (!isset($_SESSION['id_user']) && basename($_SERVER['PHP_SELF']) != "index.php
   <h4 class="text-center text-white mb-4">Laundry App</h4>
   <a href="/laundry-app/dashboard.php"><i class="bi bi-house"></i> Dashboard</a>
   <a href="/laundry-app/pages/user/index.php"><i class="bi bi-people"></i> User</a>
-  <a href="/laundry-app/pages/outlet/index.php"><i class="bi bi-building"></i> Outlet</a>
+  <a href="/laundry-app/pages/outlet/index.php"><i class="bi bi-building"></i> Cabang</a>
   <a href="/laundry-app/pages/member/index.php"><i class="bi bi-people"></i> Member</a>
   <a href="/laundry-app/pages/paket/index.php"><i class="bi bi-box"></i> Paket</a>
   <a href="/laundry-app/pages/transaksi/index.php"><i class="bi bi-receipt"></i> Transaksi</a>
