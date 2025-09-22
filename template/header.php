@@ -13,20 +13,7 @@ if (!isset($_SESSION['id_user']) && basename($_SERVER['PHP_SELF']) != "index.php
   <title>Laundry Management</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <style>
-    body { min-height: 100vh; display: flex; flex-direction: column; }
-    .main-content { flex: 1; margin-left: 220px; padding: 20px; }
-    .sidebar {
-      width: 220px; position: fixed; top: 0; left: 0; height: 100%;
-      background: #343a40; padding-top: 60px; color: #fff;
-    }
-    .sidebar a {
-      display: block; color: #ddd; padding: 12px 20px; text-decoration: none;
-    }
-    .sidebar a:hover { background: #495057; color: #fff; }
-    .navbar { position: fixed; top: 0; left: 220px; right: 0; z-index: 1000; }
-    footer { background: #f8f9fa; padding: 10px 0; text-align: center; }
-  </style>
+  <link rel="stylesheet" href="/laundry-app/public/css/style.css">
 </head>
 <body>
 <!-- Sidebar -->
@@ -46,7 +33,7 @@ if (!isset($_SESSION['id_user']) && basename($_SERVER['PHP_SELF']) != "index.php
 <nav class="navbar navbar-dark bg-dark">
   <div class="container-fluid">
     <span class="navbar-brand mb-0 h1">Dashboard</span>
-    <span class="text-white">👤 <?= $_SESSION['nama'] ?? ''; ?> (<?= $_SESSION['role'] ?? ''; ?>)</span>
+    <span class="text-white"><i class=" "></i> <?= $_SESSION['nama'] ?? ''; ?> (<?= $_SESSION['role'] ?? ''; ?>)</span>
   </div>
 </nav>
 
